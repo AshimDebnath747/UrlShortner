@@ -1,4 +1,4 @@
-const turl = require('turl');
+
 
 
 const { URL } = require("../model/url");
@@ -13,7 +13,7 @@ const SaveUrlAndGenerateShortUrl = async (req, res) => {
     visitHistory: [],
   });
   console.log(entry);
-  res.status(200).json({ id : shortUrl})
+  return res.status(200).render("home", { id : shortUrl })
 }
 const showAnalytics = async (req,res)=>{
   const shortId = req.params.shortID;
