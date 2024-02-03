@@ -35,5 +35,5 @@ app.get("/url/:id", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("sever started!");
+  console.log("server started!");
 });
