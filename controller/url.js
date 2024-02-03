@@ -11,6 +11,7 @@ const SaveUrlAndGenerateShortUrl = async (req, res) => {
     shortID: shortUrl,
     redirectUrl: longUrl,
     visitHistory: [],
+    createdBy : req.user._id,
   });
   console.log(entry);
   return res.status(200).render("home", { id : shortUrl })
