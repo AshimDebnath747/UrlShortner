@@ -8,7 +8,7 @@ const createUser = async (req,res)=>{
         email,
         password,
     })
-    res.status(200).render("login");
+    res.status(200).redirect("/login");
 }
 
 const loginUser = async (req,res)=>{
@@ -17,12 +17,10 @@ const loginUser = async (req,res)=>{
         email : email,
         password : password,
     })
-    if(!loggedInUser) return res.render("login")
-const sessionId = uuidv4();
-console.log(loggedInUser)
-setUser(sessionId,loggedInUser);
-res.cookie("uid",sessionId)
-return res.render("home");
+    if(!loggedInUser) return res.redirect("/login")
+const token = setUser(loggedInUser);
+res.cookie("token",token)
+return res.redirect("/");
 }
 
 

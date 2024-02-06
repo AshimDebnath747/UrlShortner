@@ -1,14 +1,29 @@
 
 const {getUser} = require("../services/sessionId")
 
-const authenticateForUsingUrl = (req,res,next)=>{
-   const cookie = req.cookies?.uid;
-   if(!cookie) return res.redirect("/login")
-   const user = getUser(cookie);
-   req.user = user
-   next();
+
+const checkAForAuthentication = (req,res,next)=>{
+    const cookieToken = req.cookies?.token
+    req.user = null;
+    if(!cookieToken ) return next();
+    const user = getUser(cookieToken)
+
+    req.user = user;
+
+    next();
 }
 
+const restrictTo = (roles = [])=>{
+    return (req,res,next)=>{
+        if(!req.user) return res.redirect("/login")
+
+        if(!roles.includes(req.user.role)) return res.end("unauthorized!")
+
+        return next() ;
+    }
+
+}
 module.exports = {
-    authenticateForUsingUrl,
+   checkAForAuthentication,
+   restrictTo,
 }
